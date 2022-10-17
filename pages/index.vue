@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>My homepage</h1>
+    <h1>Action tests</h1>
     <About />
   </main>
 </template>
