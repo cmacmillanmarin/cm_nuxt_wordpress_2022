@@ -9,7 +9,14 @@
 <script lang="ts" setup>
 const appConfig = useAppConfig()
 const { primary } = appConfig.theme.colors
-const layout = 'default'
+
+const route = useRoute()
+
+const layout = computed(() => {
+  const name = route.name.toString()
+  if (name.includes('admin')) return 'admin'
+  return 'default'
+})
 </script>
 
 <style lang="scss">

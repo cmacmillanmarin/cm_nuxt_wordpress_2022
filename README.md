@@ -48,4 +48,6 @@ Add your domain to `./wp-content/themes/custom-redirect/index.php`
 
 ### Plugins
 
-- (Easy Updates Manager)[https://easyupdatesmanager.com/]
+- Easy Updates Manager (https://wordpress.org/plugins/stops-core-theme-and-plugin-updates/)
+- WP REST API Controller (https://wordpress.org/plugins/wp-rest-api-controller/)
+- JWT Authentication for WP-API (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/) Follow the installation instructions (.htaccess and wp-config.php)

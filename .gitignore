@@ -8,3 +8,8 @@ node_modules
 dist
 .git
 .DS_Store
+
+# Wordpress
+
+wordpress/.htaccess
+wordpress/wp-config.php
