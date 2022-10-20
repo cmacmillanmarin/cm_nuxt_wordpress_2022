@@ -21,13 +21,15 @@ console.log(
   store.preview.refreshToken === config.public.WP_REFRESH_VALUE
 )
 
-const { data } = await useAsyncData<Array<WordpressPost>>('posts', () =>
-  $fetch(`/posts`, {
-    baseURL: config.public.WP_REST_API_BASE_URL,
-    params: {
-      refresh: store.preview.refreshToken,
-    },
-  })
+const { data } = await useAsyncData<Array<WordpressPost>>(
+  `posts-${store.preview.refreshToken}`,
+  () =>
+    $fetch(`/posts`, {
+      baseURL: config.public.WP_REST_API_BASE_URL,
+      params: {
+        refresh: store.preview.refreshToken,
+      },
+    })
 )
 const posts = computed(() => parsePosts(data.value))
 </script>
