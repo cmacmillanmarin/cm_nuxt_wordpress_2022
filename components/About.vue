@@ -13,6 +13,7 @@
 img {
   aspect-ratio: 4 / 5;
   width: 300px;
+  height: auto;
   border: 1px solid var(--color-primary);
 }
 </style>
