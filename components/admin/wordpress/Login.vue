@@ -40,7 +40,7 @@ watch(password, () => {
 const logIn: any = async (): Promise<void> => {
   await authStore.logIn({ username: username.value, password: password.value })
   if (authStore.isAuthenticated) {
-    if (route.query.r) router.push(route.query.r.toString())
+    if (route.query.redirect) router.push(route.query.redirect.toString())
     else router.push(authStore.routes.logged)
   } else {
     error.value = true

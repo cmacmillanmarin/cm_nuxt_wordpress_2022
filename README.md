@@ -55,4 +55,4 @@ Add your domain to `./wp-content/themes/custom-redirect/index.php`
 
 ### BEST PRACTICES
 
-- Do not use the native `<NuxtLink>` component linking public app pages from the private ones. Private pages are only rendered on client, so they dont include public pages payloads. It would render real data which might not be published already.
+- Do not use the native `<NuxtLink>` component to link app pages from public to private or viceversa.
