@@ -1,5 +1,12 @@
 <template>
-  <div><img src="/assets/img/about.jpg" alt="Christian MacMillan Portrait" /></div>
+  <div>
+    <img
+      src="/assets/img/about.jpg"
+      alt="Christian MacMillan Portrait"
+      loading="lazy"
+      width="2048"
+      height="2560" />
+  </div>
 </template>
 
 <style lang="scss">
