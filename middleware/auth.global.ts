@@ -17,15 +17,15 @@ export default defineNuxtRouteMiddleware(async to => {
     if (!authStore.isAuthenticated && authToken.value) {
       await authStore.validate(authToken.value)
     }
-
     if (authStore.isAuthenticated) {
       if (isPreview) {
-        store.updateTemplate('preview')
+        store.updateTemplate('default')
         store.updatePreview({ state: true, refreshToken: Date.now() })
       } else {
         store.updateTemplate('admin')
       }
     } else {
+      store.updateTemplate('default')
       return navigateTo(`${authStore.routes.redirect}?r=${to.fullPath}`)
     }
   } else {
