@@ -39,6 +39,7 @@ export default defineStore('use-auth-store', {
     },
 
     async validate(token: string | number | undefined) {
+      const authToken = useCustomCookie('authToken')
       const { data } = await useFetch<TokenValidate>(`${this.baseUrl}/token/validate`, {
         method: 'POST',
         initialCache: false,
@@ -49,6 +50,8 @@ export default defineStore('use-auth-store', {
 
       if (data.value?.code === 'jwt_auth_valid_token') {
         this.isAuthenticated = true
+      } else {
+        authToken.value = undefined
       }
     },
   },

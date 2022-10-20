@@ -1,6 +1,5 @@
 import useStore from '~/store/useStore'
 import useAuthStore from '~/store/useAuthStore'
-import { Template } from '~/types/store'
 
 export default defineNuxtRouteMiddleware(async to => {
   const store = useStore()
@@ -8,15 +7,16 @@ export default defineNuxtRouteMiddleware(async to => {
   const authToken = useCustomCookie('authToken')
   const config = useRuntimeConfig()
 
+  if (!authStore.isAuthenticated && authToken.value) {
+    await authStore.validate(authToken.value)
+  }
+
   const isAdmin = to.fullPath.startsWith(`/admin`)
   const isPreview = to.query.preview === 'true' || store.preview.state
 
   const requiresAuth = isAdmin || isPreview
 
   if (requiresAuth) {
-    if (!authStore.isAuthenticated && authToken.value) {
-      await authStore.validate(authToken.value)
-    }
     if (authStore.isAuthenticated) {
       if (isPreview) {
         store.updateTemplate('default')
