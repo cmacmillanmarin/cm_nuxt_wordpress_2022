@@ -19,11 +19,15 @@ const preview = ref(false)
 const route = useRoute()
 const config = useRuntimeConfig()
 
+const refreshKey = computed(() =>
+  route.query.preview ? Date.now() : config.public.WP_REFRESH_VALUE
+)
+
 const { data, refresh } = await useAsyncData<Array<WordpressPost>>('posts', () =>
   $fetch(`/posts`, {
     baseURL: config.public.WP_REST_API_BASE_URL,
     params: {
-      date: Date.now(),
+      refresh: refreshKey.value,
       preview: preview.value,
     },
   })
