@@ -3,7 +3,5 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  middleware: ['auth'],
-})
+console.log('/admin/docs')
 </script>

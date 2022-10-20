@@ -9,8 +9,10 @@
 </template>
 
 <script lang="ts" setup>
+import useStore from '~/store/useStore'
 import useAuthStore from '~/store/useAuthStore'
 
+const store = useStore()
 const authStore = useAuthStore()
 const router = useRouter()
 

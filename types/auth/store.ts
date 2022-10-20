@@ -15,6 +15,7 @@ export interface Login {
 }
 
 export interface State {
-  auth: boolean
+  isAuthenticated: boolean
   redir: string
+  request: string
 }

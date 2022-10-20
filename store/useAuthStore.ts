@@ -1,18 +1,16 @@
 import { defineStore } from 'pinia'
-import { State, Token, TokenValidate, Login } from '~/types/wordpress/auth'
+import { State, Token, TokenValidate, Login } from '~/types/auth/store'
 
 export default defineStore('use-auth-store', {
   state: (): State => ({
-    auth: false,
+    isAuthenticated: false,
     redir: '/admin',
+    request: '',
   }),
   getters: {
     baseUrl() {
       const config = useRuntimeConfig()
       return config.public.WP_AUTH_API_BASE_URL
-    },
-    isAuthenticated() {
-      return this.auth
     },
   },
   actions: {
@@ -26,15 +24,17 @@ export default defineStore('use-auth-store', {
       })
 
       if (data.value?.token) {
-        this.auth = true
+        this.isAuthenticated = true
         authToken.value = data.value.token
       }
     },
+
     logOut() {
       const authToken = useCustomCookie('authToken')
-      this.auth = false
+      this.isAuthenticated = false
       authToken.value = undefined
     },
+
     async validate(token: string | number | undefined) {
       const { data } = await useFetch<TokenValidate>(`${this.baseUrl}/token/validate`, {
         method: 'POST',
@@ -45,8 +45,12 @@ export default defineStore('use-auth-store', {
       })
 
       if (data.value?.code === 'jwt_auth_valid_token') {
-        this.auth = true
+        this.isAuthenticated = true
       }
+    },
+
+    updateRequest(value: string) {
+      this.request = value
     },
   },
 })

@@ -1,18 +1,27 @@
 import { defineStore } from 'pinia'
-import { State, Header } from '~/types/store'
+import { State, Preview, Template, Header } from '~/types/store'
 
 export default defineStore('use-store', {
   state: (): State => ({
-    header: 'normal',
-  }),
-  getters: {
-    headerState(): Header {
-      return this.header
+    preview: {
+      state: false,
+      refreshToken: 0,
     },
-  },
+    header: {
+      state: 'normal',
+    },
+    template: 'default',
+  }),
   actions: {
-    setHeaderState(value: Header): void {
-      this.header = value
+    updateHeader(value: Header): void {
+      this.header.state = value
+    },
+    updatePreview(params: Preview): void {
+      this.preview.state = params.state
+      this.preview.refreshToken = params.refreshToken
+    },
+    updateTemplate(state: Template) {
+      this.template = state
     },
   },
 })

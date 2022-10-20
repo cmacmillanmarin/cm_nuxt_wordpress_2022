@@ -1,4 +1,15 @@
 <template>
-  <!-- <NuxtLink :to="{ name: 'lang-posts' }">Posts</NuxtLink> -->
-  <NuxtLink :to="{ name: 'admin' }">Admin</NuxtLink>
+  <header>
+    <nav>
+      <ul>
+        <li><NuxtLink :to="{ name: 'index' }">Home</NuxtLink></li>
+        <li><NuxtLink :to="{ name: 'posts' }">Posts</NuxtLink></li>
+      </ul>
+    </nav>
+    <nav>
+      <ul>
+        <li><NuxtLink :to="{ name: 'admin' }">Admin</NuxtLink></li>
+      </ul>
+    </nav>
+  </header>
 </template>

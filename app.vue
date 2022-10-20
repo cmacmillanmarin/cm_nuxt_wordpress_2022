@@ -1,22 +1,18 @@
 <template>
   <main>
-    <NuxtLayout :name="layout">
+    <NuxtLayout :name="store.template">
       <NuxtPage />
     </NuxtLayout>
   </main>
 </template>
 
 <script lang="ts" setup>
+import useStore from '~/store/useStore'
+
+const store = useStore()
+
 const appConfig = useAppConfig()
 const { primary } = appConfig.theme.colors
-
-const route = useRoute()
-
-const layout = computed(() => {
-  const name = route.name.toString()
-  if (name.includes('admin')) return 'admin'
-  return 'default'
-})
 </script>
 
 <style lang="scss">
