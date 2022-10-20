@@ -16,6 +16,9 @@ export interface Login {
 
 export interface State {
   isAuthenticated: boolean
-  redir: string
-  request: string
+  routes: {
+    logged: string
+    redirect: string
+    requested: string
+  }
 }

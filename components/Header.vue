@@ -6,10 +6,5 @@
         <li><NuxtLink :to="{ name: 'posts' }">Posts</NuxtLink></li>
       </ul>
     </nav>
-    <nav>
-      <ul>
-        <li><NuxtLink :to="{ name: 'admin' }">Admin</NuxtLink></li>
-      </ul>
-    </nav>
   </header>
 </template>

@@ -22,6 +22,7 @@
 <script lang="ts" setup>
 import useAuthStore from '~/store/useAuthStore'
 
+const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
@@ -39,8 +40,8 @@ watch(password, () => {
 const logIn: any = async (): Promise<void> => {
   await authStore.logIn({ username: username.value, password: password.value })
   if (authStore.isAuthenticated) {
-    console.log('request', authStore.request)
-    if (authStore.request) router.push(authStore.request)
+    if (route.query.r) router.push(route.query.r.toString())
+    else router.push(authStore.routes.logged)
   } else {
     error.value = true
   }

@@ -4,8 +4,11 @@ import { State, Token, TokenValidate, Login } from '~/types/auth/store'
 export default defineStore('use-auth-store', {
   state: (): State => ({
     isAuthenticated: false,
-    redir: '/admin',
-    request: '',
+    routes: {
+      logged: '/admin',
+      redirect: '/login',
+      requested: '',
+    },
   }),
   getters: {
     baseUrl() {
@@ -47,10 +50,6 @@ export default defineStore('use-auth-store', {
       if (data.value?.code === 'jwt_auth_valid_token') {
         this.isAuthenticated = true
       }
-    },
-
-    updateRequest(value: string) {
-      this.request = value
     },
   },
 })

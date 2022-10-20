@@ -13,11 +13,13 @@
 import useStore from '~/store/useStore'
 import { WordpressPost, parsePosts } from '~/types/wordpress/post'
 
-const store = useStore()
 const config = useRuntimeConfig()
+
+const store = useStore()
 
 console.log(
   '/ deploy refreshToken ->',
+  store.preview.refreshToken,
   store.preview.refreshToken === config.public.WP_REFRESH_VALUE
 )
 

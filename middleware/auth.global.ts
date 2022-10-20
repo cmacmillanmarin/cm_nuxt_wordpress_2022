@@ -11,8 +11,6 @@ export default defineNuxtRouteMiddleware(async to => {
   const isAdmin = to.fullPath.startsWith(`/admin`)
   const isPreview = to.query.preview === 'true' || store.preview.state
 
-  const template: Template = isAdmin ? 'admin' : 'default'
-
   const requiresAuth = isAdmin || isPreview
 
   if (requiresAuth) {
@@ -20,17 +18,18 @@ export default defineNuxtRouteMiddleware(async to => {
       await authStore.validate(authToken.value)
     }
 
-    store.updateTemplate(template)
     if (authStore.isAuthenticated) {
       if (isPreview) {
+        store.updateTemplate('preview')
         store.updatePreview({ state: true, refreshToken: Date.now() })
+      } else {
+        store.updateTemplate('admin')
       }
-    } else if (to.fullPath !== authStore.redir && process.client) {
-      authStore.updateRequest(to.fullPath)
-      return navigateTo(authStore.redir)
+    } else {
+      return navigateTo(`${authStore.routes.redirect}?r=${to.fullPath}`)
     }
   } else {
-    store.updateTemplate(template)
+    store.updateTemplate('default')
     store.updatePreview({ state: false, refreshToken: config.public.WP_REFRESH_VALUE })
   }
 })

@@ -1,23 +1,24 @@
 <template>
   <header>
     <p>Admin header</p>
-    <NuxtLink to="/">Public Site</NuxtLink>
-    <ClientOnly>
-      <button v-if="authStore.isAuthenticated" @click="logOut">Log out</button>
-    </ClientOnly>
+    <nav>
+      <ul>
+        <li><NuxtLink to="/admin">Home</NuxtLink></li>
+      </ul>
+      <ul>
+        <li><button @click="logOut">Log out</button></li>
+      </ul>
+    </nav>
   </header>
 </template>
 
 <script lang="ts" setup>
-import useStore from '~/store/useStore'
 import useAuthStore from '~/store/useAuthStore'
-
-const store = useStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
 const logOut: any = (): void => {
   authStore.logOut()
-  router.push(authStore.redir)
+  router.push(authStore.routes.redirect)
 }
 </script>
