@@ -25,7 +25,7 @@ export default defineNuxtRouteMiddleware(async to => {
       if (isPreview) {
         store.updatePreview({ state: true, refreshToken: Date.now() })
       }
-    } else if (to.fullPath !== authStore.redir) {
+    } else if (to.fullPath !== authStore.redir && process.client) {
       authStore.updateRequest(to.fullPath)
       return navigateTo(authStore.redir)
     }
