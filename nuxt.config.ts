@@ -25,4 +25,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  generate: {
+    routes: ['/admin/docs', 'admin/preview', 'admin/deploy'],
+  },
 })
