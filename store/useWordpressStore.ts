@@ -14,11 +14,14 @@ export default defineStore('use-wordpress-store', {
   },
   actions: {
     async getPosts() {
-      const { data } = await useFetch<Array<WordpressPost>>(`${this.baseUrl}/posts`, {
+      const { data, refresh } = await useFetch<Array<WordpressPost>>(`${this.baseUrl}/posts`, {
         method: 'GET',
         // initialCache: false,
       })
+      //   console.log(`${this.baseUrl}/posts`)
+      refresh()
       if (data) {
+        // console.log(this.baseUrl)
         this.posts = parsePosts(data.value)
       }
     },
