@@ -45,7 +45,7 @@ export default defineNuxtConfig({
       script: [],
     },
   },
-  modules: ['@pinia/nuxt'],
+  modules: ['@nuxtjs/sitemap', '@nuxtjs/robots', '@pinia/nuxt'],
   vite: {
     css: {
       preprocessorOptions: {

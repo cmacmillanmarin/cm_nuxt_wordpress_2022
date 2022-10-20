@@ -16,6 +16,8 @@
     "sass": "^1.55.0"
   },
   "dependencies": {
+    "@nuxtjs/robots": "^2.5.0",
+    "@nuxtjs/sitemap": "^2.4.0",
     "@pinia/nuxt": "^0.4.3",
     "pinia": "^2.0.23"
   }
