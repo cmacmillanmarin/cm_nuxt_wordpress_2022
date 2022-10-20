@@ -9,9 +9,7 @@ export default defineStore('use-auth-store', {
   getters: {
     baseUrl() {
       const config = useRuntimeConfig()
-      const { WP_BASE_URL, WP_REST_API_BASE_URL } = config.public
-      const url = WP_BASE_URL + WP_REST_API_BASE_URL
-      return `${url}/jwt-auth/v1`
+      return config.public.WP_AUTH_API_BASE_URL
     },
     isAuthenticated() {
       return this.auth
@@ -19,7 +17,7 @@ export default defineStore('use-auth-store', {
   },
   actions: {
     async logIn(params: Login) {
-      const token = useCustomCookie('token')
+      const authToken = useCustomCookie('authToken')
 
       const { data } = await useFetch<Token>(`${this.baseUrl}/token`, {
         method: 'POST',
@@ -29,13 +27,13 @@ export default defineStore('use-auth-store', {
 
       if (data.value?.token) {
         this.auth = true
-        token.value = data.value.token
+        authToken.value = data.value.token
       }
     },
     logOut() {
-      const token = useCustomCookie('token')
+      const authToken = useCustomCookie('authToken')
       this.auth = false
-      token.value = undefined
+      authToken.value = undefined
     },
     async validate(token: string | number | undefined) {
       const { data } = await useFetch<TokenValidate>(`${this.baseUrl}/token/validate`, {

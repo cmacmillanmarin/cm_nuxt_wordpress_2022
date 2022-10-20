@@ -2,10 +2,10 @@ import useAuthStore from '~/store/useAuthStore'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const authStore = useAuthStore()
-  const token = useCustomCookie('token')
+  const authToken = useCustomCookie('authToken')
 
-  if (!authStore.isAuthenticated && token.value) {
-    await authStore.validate(token.value)
+  if (!authStore.isAuthenticated && authToken.value) {
+    await authStore.validate(authToken.value)
   }
 
   if (!authStore.isAuthenticated && to.fullPath !== authStore.redir) {

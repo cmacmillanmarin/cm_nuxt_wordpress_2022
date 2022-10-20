@@ -5,8 +5,13 @@
         <AdminWordpressLogin />
       </div>
       <div v-else>
-        <NuxtLink to="/admin/docs">Docs</NuxtLink>
-        <NuxtLink to="/admin/deploy">Deploy</NuxtLink>
+        <nav>
+          <ul>
+            <li><NuxtLink to="/admin/docs">Docs</NuxtLink></li>
+            <li><NuxtLink to="/admin/deploy">Deploy</NuxtLink></li>
+            <li><NuxtLink to="/admin/preview">Preview</NuxtLink></li>
+          </ul>
+        </nav>
       </div>
     </ClientOnly>
   </div>
@@ -21,3 +26,9 @@ definePageMeta({
 
 const authStore = useAuthStore()
 </script>
+
+<style lang="scss" scoped>
+a {
+  margin: 0 2rem;
+}
+</style>
