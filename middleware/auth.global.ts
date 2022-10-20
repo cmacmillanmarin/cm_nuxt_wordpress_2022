@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async to => {
   }
 
   const isAdmin = to.fullPath.startsWith(`/admin`)
-  const isPreview = to.query.preview === 'true' || store.preview.state
+  const isPreview = to.fullPath.startsWith(`/preview`) || store.preview.state
 
   const requiresAuth = isAdmin || isPreview
 
