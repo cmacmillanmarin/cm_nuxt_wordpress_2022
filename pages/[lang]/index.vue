@@ -23,6 +23,7 @@ const { data, refresh } = await useAsyncData<Array<WordpressPost>>('posts', () =
   $fetch(`/posts`, {
     baseURL: config.public.WP_REST_API_BASE_URL,
     params: {
+      date: Date.now(),
       preview: preview.value,
     },
   })
