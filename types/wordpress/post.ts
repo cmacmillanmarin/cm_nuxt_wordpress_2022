@@ -1,3 +1,4 @@
+export type WordpressPosts = Array<WordpressPost>
 export interface WordpressPost {
   title: {
     rendered: string

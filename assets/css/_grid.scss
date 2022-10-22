@@ -1,0 +1,48 @@
+//
+// Define layouts and columns
+$layouts: 'mobile', 'tablet', 'desktop';
+$columns: (
+  mobile: 6,
+  tablet: 12,
+  desktop: 12,
+);
+
+.in-grid {
+  --max-width: 1440px;
+  --layout-indent: 3rem;
+  --layout-gap: 2rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--layout-gap);
+  padding: 0 var(--layout-indent);
+  max-width: var(--max-width);
+  margin: 0 auto;
+
+  &--centered {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@each $layout in $layouts {
+  @include from__($layout) {
+    @for $i from 1 through map-get($columns, $layout) {
+      $col_value: map-get($columns, $layout);
+      $col_width: calc((#{$i} / #{$col_value}) * 100%);
+      $gap_width: calc(var(--layout-gap) * (1 - (1 / (#{$col_value} / #{$i}))));
+      $gap_width_margin: calc(var(--layout-gap) * (#{$i} - (1 / (#{$col_value} / #{$i}))));
+      $width_value: calc($col_width - $gap_width);
+      $margin_value: calc($col_width - $gap_width_margin + $i * var(--layout-gap));
+      .in-grid__col-#{$i}--#{$layout} {
+        width: $width_value;
+      }
+      .in-grid__col-gap-left-#{$i}--#{$layout} {
+        margin-left: $margin_value;
+      }
+      .in-grid__col-gap-right-#{$i}--#{$layout} {
+        margin-right: $margin_value;
+      }
+    }
+  }
+}

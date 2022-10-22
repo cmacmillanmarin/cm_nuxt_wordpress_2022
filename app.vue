@@ -3,6 +3,8 @@
     <NuxtLayout :name="store.template">
       <NuxtPage />
     </NuxtLayout>
+
+    <HelpersGrid />
   </main>
 </template>
 
@@ -12,11 +14,11 @@ import useStore from '~/store/useStore'
 const store = useStore()
 
 const appConfig = useAppConfig()
-const { primary } = appConfig.theme.colors
+const { lime } = appConfig.theme.colors
 </script>
 
 <style lang="scss">
 main {
-  --color-primary: v-bind(primary);
+  --color-lime: v-bind(lime);
 }
 </style>

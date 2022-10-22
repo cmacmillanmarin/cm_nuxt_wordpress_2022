@@ -1,0 +1,28 @@
+a,
+p,
+div {
+  font-size: 1.6rem;
+}
+
+p {
+  line-height: 2rem;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  &:visited {
+    color: black;
+  }
+  &:hover {
+    color: grey;
+  }
+}
+
+h1 {
+  font-size: 3.2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}

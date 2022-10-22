@@ -1,7 +1,7 @@
 export default defineAppConfig({
   theme: {
     colors: {
-      primary: '#ff0000',
+      lime: '#00ff00',
     },
   },
 })

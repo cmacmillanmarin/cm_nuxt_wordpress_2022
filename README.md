@@ -44,7 +44,7 @@ Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/prese
 
 ## Wordpress
 
-Add your domain to `./wp-content/themes/custom-redirect/index.php`
+Add your FE domain to `./wp-content/themes/custom-redirect/index.php`
 
 ### Plugins
 
@@ -55,4 +55,6 @@ Add your domain to `./wp-content/themes/custom-redirect/index.php`
 
 ### BEST PRACTICES
 
+- Define constants in app.config.ts
+- CSS BEM NAMES
 - Do not use the native `<NuxtLink>` component to link app pages from public to private or viceversa.

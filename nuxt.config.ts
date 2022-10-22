@@ -2,12 +2,13 @@ require('dotenv').config({
   path: `./config/env/.env.${process.env.ENV}`,
 })
 
-const { FE_BASE_URL, WP_BASE_URL } = process.env
+const { ENV, FE_BASE_URL, WP_BASE_URL } = process.env
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
+      IS_DEV: ENV == 'dev',
       FE_BASE_URL: FE_BASE_URL,
       WP_REFRESH_VALUE: Date.now(),
       WP_BASE_URL: WP_BASE_URL,

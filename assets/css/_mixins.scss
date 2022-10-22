@@ -1,0 +1,53 @@
+//
+// mobile first breakpoints
+//
+// mobile ->            0px >= 480px
+// tablet ->            481px >= 768px
+// tablet landscape ->  769px >= 1023px
+// desktop ->           1024px >= 1199px
+// desktop medium ->    1200px >= 1440px
+// desktop big ->       1441px > X
+
+@mixin from__tablet {
+  @media screen and (min-width: 481px) {
+    @content;
+  }
+}
+
+@mixin from__tablet--landscape {
+  @media screen and (min-width: 769px) {
+    @content;
+  }
+}
+
+@mixin from__desktop {
+  @media screen and (min-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin from__desktop--medium {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin from__desktop--big {
+  @media screen and (min-width: 1441px) {
+    @content;
+  }
+}
+
+@mixin from__($key) {
+  @if $key == 'mobile' {
+    @content;
+  } @else if $key == 'tablet' {
+    @media screen and (min-width: 481px) {
+      @content;
+    }
+  } @else if $key == 'desktop' {
+    @media screen and (min-width: 1023px) {
+      @content;
+    }
+  }
+}

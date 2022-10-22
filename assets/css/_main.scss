@@ -1,2 +1,33 @@
 //
 // Add custom and general css as grids, typographies, mixins, etc (css vars on App.vue)
+
+@import './reset';
+@import './mixins';
+@import './grid';
+@import './typography';
+
+html {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 10px;
+}
+
+.display {
+  &--flex {
+    display: flex;
+  }
+  &--inline-block {
+    display: inline-block;
+  }
+}
+
+.text-align {
+  &--right {
+    text-align: right;
+  }
+}
+
+.border {
+  &--none {
+    border: none;
+  }
+}

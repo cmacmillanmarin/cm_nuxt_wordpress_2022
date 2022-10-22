@@ -1,10 +1,16 @@
 <template>
-  <header>
-    <nav>
-      <ul>
-        <li><NuxtLink :to="{ name: 'index' }">Home</NuxtLink></li>
-        <li><NuxtLink :to="{ name: 'posts' }">Posts</NuxtLink></li>
-      </ul>
+  <header clas="header">
+    <nav class="in-grid">
+      <NuxtLink to="/">
+        <Logo />
+      </NuxtLink>
     </nav>
   </header>
 </template>
+
+<style lang="scss">
+.logo {
+  padding-top: 1.6rem;
+  width: 12rem;
+}
+</style>
