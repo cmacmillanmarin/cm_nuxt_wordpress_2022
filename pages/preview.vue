@@ -3,5 +3,6 @@
 <script lang="ts" setup>
 const route = useRoute()
 const router = useRouter()
-router.push(route.query.to.toString() || '/')
+const redirect = route.query.to ? route.query.to.toString() : '/'
+router.push(redirect)
 </script>
