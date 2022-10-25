@@ -10,6 +10,7 @@ export interface Preview {
 }
 
 export interface State {
+  loaded: boolean
   preview: Preview
   header: Header
   template: Template
