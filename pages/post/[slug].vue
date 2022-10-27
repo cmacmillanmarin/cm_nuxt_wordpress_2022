@@ -7,7 +7,7 @@
           Post {{ route.params.slug }}
         </h1>
 
-        <p v-for="i in 10" data-scroll-section v-intersect:animate.fade class="will-fade">
+        <p v-for="i in 10" data-scroll-section v-intersect:animate.translate class="will-translate">
           Lorem Ipsum dolor emet.
         </p>
 

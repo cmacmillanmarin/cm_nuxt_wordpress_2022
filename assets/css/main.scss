@@ -5,6 +5,7 @@
 @import './mixins';
 @import './grid';
 @import './typography';
+@import './intersect';
 
 html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -30,19 +31,4 @@ html {
   &--none {
     border: none;
   }
-}
-
-:root {
-  --v-intersect-duration: 500ms;
-  --v-intersect-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Ease out quad */
-}
-
-.will-fade {
-  opacity: 0;
-  will-change: opacity;
-  transition: var(--v-intersect-duration) opacity var(--v-intersect-easing);
-}
-
-.fade {
-  opacity: 1;
 }
