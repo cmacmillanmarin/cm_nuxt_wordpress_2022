@@ -2,18 +2,18 @@
   <footer>
     <nav class="in-grid in-grid--centered">
       <ul class="in-grid__col-6--desktop">
-        <li>
-          <a href="https://github.com/cmacmillanmarin" rel="noopener"
-            >Nuxt + Headless Wordpress CMS 2022</a
-          >
-        </li>
+        <li><a :href="config.public.FE_BASE_URL">Public Site</a></li>
       </ul>
       <ul class="in-grid__col-6--desktop text-align--right">
-        <li><a href="https://cmacmillanmarin.com" rel="noopener">@cmacmillanmarin 2022</a></li>
+        @cmacmillanmarin
       </ul>
     </nav>
   </footer>
 </template>
+
+<script lang="ts" setup>
+const config = useRuntimeConfig()
+</script>
 
 <style lang="scss">
 footer {

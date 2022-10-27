@@ -9,6 +9,10 @@ dist
 .git
 .DS_Store
 
+# env
+
+.env.private
+
 # Wordpress
 
 wordpress/.htaccess

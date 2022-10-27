@@ -5,7 +5,7 @@ export default defineStore('use-auth-store', {
   state: (): State => ({
     isAuthenticated: false,
     routes: {
-      logged: '/admin',
+      logged: '/docs',
       redirect: '/login',
       requested: '',
     },

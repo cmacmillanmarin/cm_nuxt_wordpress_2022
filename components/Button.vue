@@ -15,6 +15,7 @@ const type = props.to ? resolveComponent('NuxtLink') : 'button'
 
 <style lang="scss">
 .button {
+  cursor: pointer;
   background: var(--color-lime);
   padding: 1.2rem 2rem;
   text-transform: uppercase;

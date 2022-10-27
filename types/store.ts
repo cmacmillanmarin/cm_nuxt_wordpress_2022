@@ -1,5 +1,5 @@
 // Add available templates
-export type Template = 'default' | 'admin'
+export type Template = 'default' | 'docs'
 
 export interface Header {
   state: 'normal' | 'sticky' // Add available headers

@@ -1,7 +1,7 @@
 <template>
-  <div>docs</div>
+  <div>preview</div>
 </template>
 
 <script lang="ts" setup>
-console.log('/admin/docs')
+console.log('/docs/preview')
 </script>

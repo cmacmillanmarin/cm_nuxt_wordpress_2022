@@ -16,14 +16,14 @@ export default defineNuxtRouteMiddleware(async to => {
     await authStore.validate(authToken.value)
   }
 
-  const isAdmin = to.fullPath.startsWith(`/admin`)
+  const isDocs = to.fullPath.startsWith(`/docs`)
   const isPreview = to.fullPath.startsWith(`/preview`) || store.preview.state
 
-  const requiresAuth = isAdmin || isPreview
+  const requiresAuth = isDocs || isPreview
 
   if (requiresAuth) {
     if (authStore.isAuthenticated) {
-      const template: Template = isAdmin ? 'admin' : 'default'
+      const template: Template = isDocs ? 'docs' : 'default'
       store.updateTemplate(template)
       if (isPreview) {
         store.updatePreview({ state: true, refreshToken: Date.now() })

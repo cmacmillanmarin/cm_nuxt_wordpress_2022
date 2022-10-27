@@ -1,9 +1,9 @@
 <template>
   <div>
     <ClientOnly>
-      <AdminHeader />
+      <DocsHeader />
       <slot />
-      <AdminFooter />
+      <DocsFooter />
     </ClientOnly>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="in-grid in-grid--centered">
-      <AdminWordpressLogin class="in-grid__col-4--desktop" />
+      <DocsWordpressLogin class="in-grid__col-4--desktop" />
     </div>
   </div>
 </template>
