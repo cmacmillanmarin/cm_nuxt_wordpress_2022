@@ -6,6 +6,11 @@ Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
 
 ### Setup
 
+- Vercel
+  - Get access token
+  - Add to `.env.private`
+  - Add to Vercel ENV VALUES WITH SAME KEY
+
 Make sure to install the dependencies:
 
 ```bash

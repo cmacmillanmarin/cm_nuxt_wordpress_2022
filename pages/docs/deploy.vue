@@ -13,7 +13,7 @@
         :data="deployment"
         class="in-grid__col-6--mobile in-grid__col-12--desktop" />
       <div class="in-grid__col-6--mobile in-grid__col-12--desktop text-align--center">
-        <Button v-if="deployments.pagination" label="Load More" @click="loadMore" />
+        <Button label="Load More" @click="loadMore" />
       </div>
     </div>
   </div>
