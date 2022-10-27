@@ -2,7 +2,7 @@
   <header clas="header">
     <nav class="in-grid">
       <NuxtLink to="/">
-        <Logo />
+        <Logo v-intersect:animate.fade class="will-fade" />
       </NuxtLink>
     </nav>
   </header>

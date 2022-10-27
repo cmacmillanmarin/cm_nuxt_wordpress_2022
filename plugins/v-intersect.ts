@@ -1,12 +1,18 @@
-const _intersectionObserverOptions: IntersectionObserverInit = {
-  rootMargin: '60px',
-  threshold: 0,
-}
+/**
+ *
+ * - Animations: v-intersect:animate.[NAME]
+ *      Available animations (./assets/css/intersect.scss):
+ *         · fade
+ *         · translate
+ *
+ * - Callback: v-intersect:callback="[CALLBACK]"
+ *
+ */
+
 function createIntersectionObserver(
   el: Element,
-  onIntersect: (el: Element) => void,
-  options: Partial<IntersectionObserver> = {}
-) {
+  onIntersect: (el: Element) => void
+): IntersectionObserver {
   const observer = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach(entry => {
@@ -15,7 +21,10 @@ function createIntersectionObserver(
         onIntersect(el)
       })
     },
-    { ..._intersectionObserverOptions, ...options }
+    {
+      rootMargin: '0px',
+      threshold: 1,
+    }
   )
 
   observer.unobserve(el)
@@ -23,56 +32,24 @@ function createIntersectionObserver(
   return observer
 }
 
-/**
- * How to use?
- *
- * Toggle a predefined animation:
- * - v-intersect:animate.fadeOut
- *
- * Toggle a custom class
- * - v-intersect:class.asdf
- *
- * With options
- * - ="{ delay: '100ms', duration: '100ms' }"
- */
 export default defineNuxtPlugin(nuxtApp => {
   nuxtApp.vueApp.directive('intersect', {
-    created(el: HTMLElement, binding) {
-      const duration: string = binding.value?.duration || ''
-      const delay: string = binding.value?.delay || ''
-      const intersectionOptions: Partial<IntersectionObserverInit> = {
-        rootMargin: binding.value?.offset || _intersectionObserverOptions.rootMargin,
-      }
-      if (duration) el.style.setProperty('--v-intersect-duration', duration)
-      if (delay) el.style.setProperty('--v-intersect-delay', delay)
-
+    created(el: HTMLElement, binding): void {
       switch (binding.arg) {
-        // animate and class doing the same thing right now, but separated them for future improvements
         case 'animate':
-        case 'class':
           Object.keys(binding.modifiers).forEach(anim => {
             nextTick(() => {
-              el.classList.add(`${anim}-init`)
-              console.log(`Add ${anim}-init`)
-              createIntersectionObserver(
-                el,
-                () => {
-                  console.log(`Add ${anim}`)
-                  //   el.classList.add(anim)
-                },
-                intersectionOptions
-              )
+              createIntersectionObserver(el, () => {
+                el.classList.add(anim)
+              })
             })
           })
           break
         case 'callback':
-          createIntersectionObserver(el, binding.value, intersectionOptions)
+          createIntersectionObserver(el, binding.value)
           break
         default:
-          console.warn(
-            `v-intersect directive did not recognize the given argument "${binding.arg}"`,
-            el
-          )
+          console.warn(`v-intersect :: undefined directive "${binding.arg}"`, el)
       }
     },
   })
