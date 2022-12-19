@@ -49,7 +49,7 @@ export default defineNuxtConfig({
       script: [],
     },
   },
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@nuxt/content'],
   vite: {
     css: {
       preprocessorOptions: {

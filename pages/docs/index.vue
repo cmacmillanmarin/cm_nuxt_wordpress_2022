@@ -2,6 +2,7 @@
   <div class="in-grid">
     <nav>
       <ul>
+        <li><NuxtLink to="/docs/guide">Guide</NuxtLink></li>
         <li><NuxtLink to="/docs/deploy">Deploy</NuxtLink></li>
         <li><NuxtLink to="/docs/preview">Preview</NuxtLink></li>
       </ul>
