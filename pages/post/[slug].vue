@@ -8,11 +8,11 @@
         </h1>
 
         <p v-for="i in 10" data-scroll-section v-intersect:animate.translate class="will-translate">
-          Lorem Ipsum dolor emet.
+          Lorem Ipsum dolor emet. Will translate
         </p>
 
         <p v-for="i in 10" data-scroll-section v-intersect:callback="callback" class="will-fade">
-          Lorem Ipsum dolor emet.
+          Lorem Ipsum dolor emet. Will Fade
         </p>
       </div>
     </div>
@@ -22,8 +22,8 @@
 <script lang="ts" setup>
 const route = useRoute()
 
-function callback(el) {
-  el.style.opacity = 1
+function callback(el: HTMLElement) {
+  el.style.opacity = '1'
   console.log('callback', el)
 }
 console.log(`/post/${route.params.slug}`)

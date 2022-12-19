@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="in-grid">
     <nav>
       <ul>
         <li><NuxtLink to="/docs/deploy">Deploy</NuxtLink></li>
@@ -14,7 +14,7 @@ console.log('/docs')
 </script>
 
 <style lang="scss" scoped>
-a {
-  margin: 0 2rem;
-}
+// a {
+//   margin: 0 2rem;
+// }
 </style>

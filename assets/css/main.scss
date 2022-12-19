@@ -7,6 +7,10 @@
 @import './typography';
 @import './intersect';
 
+:root {
+  --css-transition: 200ms all ease-out;
+}
+
 html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 10px;
@@ -30,5 +34,13 @@ html {
 .border {
   &--none {
     border: none;
+  }
+}
+
+.__main {
+  &--loading {
+    * {
+      cursor: progress !important;
+    }
   }
 }

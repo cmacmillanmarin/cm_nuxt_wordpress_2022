@@ -11,6 +11,7 @@ export interface Preview {
 
 export interface State {
   loaded: boolean
+  loading: boolean
   preview: Preview
   header: Header
   template: Template

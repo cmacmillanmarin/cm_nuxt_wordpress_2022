@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="__main" :class="{ '__main--loading': isLoading }">
     <NuxtLayout :name="store.template">
       <NuxtPage />
     </NuxtLayout>
@@ -15,6 +15,8 @@ const store = useStore()
 
 const appConfig = useAppConfig()
 const { lime } = appConfig.theme.colors
+
+const isLoading = computed<boolean>(() => store.isLoading)
 </script>
 
 <style lang="scss">
