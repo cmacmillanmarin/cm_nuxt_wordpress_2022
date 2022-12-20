@@ -9,7 +9,12 @@
       </nav>
     </aside>
     <div>
-      <ContentDoc />
+      <ContentDoc :path="slug" />
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+const route = useRoute()
+const slug = computed<string>(() => `/${route.params.slug}`)
+</script>
