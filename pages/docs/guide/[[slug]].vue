@@ -1,5 +1,5 @@
 <template>
-  <div class="docs-guide in-grid">
+  <div class="docs-page docs-page--guide in-grid">
     <aside>
       <nav>
         <ul>

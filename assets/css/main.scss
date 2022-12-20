@@ -2,12 +2,15 @@
 // Add custom and general css as grids, typographies, mixins, etc (css vars on App.vue)
 
 @import './reset';
-@import './mixins';
 @import './grid';
 @import './typography';
 @import './intersect';
 
 :root {
+  --vh: 100vh;
+  @supports (height: 1svh) {
+    --vh: 100svh;
+  }
   --css-transition: 200ms all ease-out;
 }
 
@@ -22,6 +25,9 @@ html {
   }
   &--inline-block {
     display: inline-block;
+  }
+  @include from__tablet {
+    color: red;
   }
 }
 

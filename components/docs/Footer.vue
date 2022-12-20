@@ -1,6 +1,6 @@
 <template>
-  <footer v-intersect:animate.fade class="will-fade">
-    <nav class="in-grid in-grid--centered">
+  <footer class="docs-footer display--flex will-fade" v-intersect:animate.fade>
+    <nav class="docs-footer__nav in-grid in-grid--centered">
       <ul class="in-grid__col-6--desktop">
         <li><a :href="config.public.FE_BASE_URL">Public Site</a></li>
       </ul>
@@ -16,7 +16,11 @@ const config = useRuntimeConfig()
 </script>
 
 <style lang="scss">
-footer {
-  margin: 2rem 0;
+.docs-footer {
+  height: var(--footer-height);
+  border-top: 1px solid grey;
+  &__nav {
+    width: 100%;
+  }
 }
 </style>

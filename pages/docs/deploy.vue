@@ -1,5 +1,5 @@
 <template>
-  <div class="docs-deploy">
+  <div class="docs-page docs-page--deploy">
     <div class="in-grid">
       <div class="in-grid__col-3--mobile in-grid__col-6--desktop">
         <h1>Deployments</h1>

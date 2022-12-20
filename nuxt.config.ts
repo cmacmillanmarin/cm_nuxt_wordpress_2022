@@ -50,11 +50,15 @@ export default defineNuxtConfig({
     },
   },
   modules: ['@pinia/nuxt', '@nuxt/content'],
+  // Global classes and styles
+  css: ['@/assets/css/main.scss'],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/css/main.scss" as *;',
+          additionalData: `
+            @import "@/assets/css/_mixins.scss";
+          `,
         },
       },
     },
