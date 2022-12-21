@@ -25,9 +25,6 @@ export default defineNuxtRouteMiddleware(async to => {
     if (authStore.isAuthenticated) {
       const template: Template = isDocs ? 'docs' : 'default'
       store.updateTemplate(template)
-      if (isPreview) {
-        store.updatePreview({ state: true, refreshToken: Date.now() })
-      }
     } else {
       store.updateTemplate('default')
       const loggedRedirect = to.query.to ? to.query.to : to.fullPath

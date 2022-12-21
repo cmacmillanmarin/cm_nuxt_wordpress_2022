@@ -24,6 +24,9 @@ export default defineStore('use-store', {
     isPreview(): boolean {
       return this.preview.state
     },
+    refreshToken(): number {
+      return this.preview.refreshToken
+    },
   },
   actions: {
     updateLoading(value: boolean): void {

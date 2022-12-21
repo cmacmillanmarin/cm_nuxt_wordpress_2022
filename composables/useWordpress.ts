@@ -4,32 +4,31 @@ import { WordpressTypes } from '~/types/wordpress/index'
 export default function useWordpress() {
   const store = useStore()
   const config = useRuntimeConfig()
-  const { WP_REFRESH_VALUE, WP_REST_API_BASE_URL } = config.public
+  const { WP_REST_API_BASE_URL } = config.public
 
   async function fetch(call: string) {
     //
     // Fetch
-    // TODO: @Christian Explain
+    // refreshToken is used to control the Wordpress and Nuxt caché
     //
-    const { refreshToken } = store.preview
-    const cache = refreshToken === WP_REFRESH_VALUE
-    const key = `${getKey(call)}-${refreshToken}`
+    const key = getKey(call)
 
-    console.log(`$fetch('${call}', { key: '${key}', cache: ${cache} })`)
+    console.log(`$fetch('${call}', { params: { refresh: ${store.refreshToken} })`)
 
     const { data, error } = await useAsyncData<WordpressTypes>(key, () =>
       $fetch(call, {
         baseURL: WP_REST_API_BASE_URL,
         params: {
-          refresh: refreshToken,
+          refresh: store.refreshToken,
         },
       })
     )
+
     return { data, error }
   }
 
   function getKey(call: string) {
-    return call.substring(1).replaceAll('/', '-')
+    return `${call.substring(1).replaceAll('/', '-')}-${store.refreshToken}`
   }
 
   return { fetch }
