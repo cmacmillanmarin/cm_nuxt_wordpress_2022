@@ -15,7 +15,7 @@ export interface Post {
   content: string
 }
 
-export function parsePosts(data: Array<WordpressPost>): Array<Post> {
+export function parsePosts(data: Array<WordpressPost> | null): Array<Post> {
   const parsedPosts: Array<Post> = []
   data?.forEach(post => {
     parsedPosts.push(parsePost(post))
