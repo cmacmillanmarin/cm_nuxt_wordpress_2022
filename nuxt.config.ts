@@ -49,9 +49,21 @@ export default defineNuxtConfig({
       script: [],
     },
   },
+
+  components: {
+    dirs: [
+      {
+        path: '~/components/global',
+        global: true,
+      },
+      '~/components',
+    ],
+  },
+
   modules: ['@pinia/nuxt', '@nuxt/content'],
-  // Global classes and styles
+
   css: ['@/assets/css/main.scss'],
+
   vite: {
     css: {
       preprocessorOptions: {

@@ -1,15 +1,16 @@
 <template>
   <header class="docs-header">
-    <nav class="in-grid in-grid--centered">
+    <nav class="docs-header__nav in-grid in-grid--centered">
       <ul class="in-grid__col-6--desktop">
         <li>
           <NuxtLink to="/docs">
-            <Logo v-intersect:animate.fade class="will-fade" />
+            [Logo] Docs
+            <!-- <Logo v-intersect:animate.fade class="will-fade" /> -->
           </NuxtLink>
         </li>
       </ul>
       <ul class="in-grid__col-6--desktop text-align--right">
-        <li><button @click="logOut">Log out</button></li>
+        <li><DocsAccount @log-out="logOut" /></li>
       </ul>
     </nav>
   </header>
@@ -33,10 +34,12 @@ const logOut: any = (): void => {
   left: 0;
   width: 100%;
   z-index: 2;
-  background-color: rgba(255, 255, 255, 0.5);
-  .logo {
-    padding-top: 1.6rem;
-    width: 8rem;
+  background-color: var(--transparent-white);
+  height: var(--header-height);
+  border-bottom: var(--border);
+  display: flex;
+  &__nav {
+    width: 100%;
   }
 }
 </style>

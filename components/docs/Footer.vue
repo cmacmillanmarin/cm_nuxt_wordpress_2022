@@ -2,10 +2,10 @@
   <footer class="docs-footer display--flex will-fade" v-intersect:animate.fade>
     <nav class="docs-footer__nav in-grid in-grid--centered">
       <ul class="in-grid__col-6--desktop">
-        <li><a :href="config.public.FE_BASE_URL">Public Site</a></li>
+        <li><a href="https://macmillan.studio">MacMillan Studio</a></li>
       </ul>
       <ul class="in-grid__col-6--desktop text-align--right">
-        @cmacmillanmarin
+        <li>© 2023</li>
       </ul>
     </nav>
   </footer>
@@ -18,7 +18,7 @@ const config = useRuntimeConfig()
 <style lang="scss">
 .docs-footer {
   height: var(--footer-height);
-  border-top: 1px solid grey;
+  border-top: var(--border);
   &__nav {
     width: 100%;
   }

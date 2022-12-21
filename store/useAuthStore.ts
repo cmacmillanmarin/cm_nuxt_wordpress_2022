@@ -50,6 +50,7 @@ export default defineStore('use-auth-store', {
 
       if (data.value?.code === 'jwt_auth_valid_token') {
         this.isAuthenticated = true
+        console.log(data.value)
       } else {
         authToken.value = undefined
       }
