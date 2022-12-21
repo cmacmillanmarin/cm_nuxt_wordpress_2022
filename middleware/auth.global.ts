@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware(async to => {
   }
 
   const isDocs = to.fullPath.startsWith(`/docs`)
-  const isPreview = to.fullPath.startsWith(`/preview`) || store.preview.state
+  const isPreview = to.fullPath.startsWith(`/preview`) || store.isPreview
 
   const requiresAuth = isDocs || isPreview
 

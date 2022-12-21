@@ -21,6 +21,9 @@ export default defineStore('use-store', {
     isLoading(): boolean {
       return this.loading
     },
+    isPreview(): boolean {
+      return this.preview.state
+    },
   },
   actions: {
     updateLoading(value: boolean): void {
