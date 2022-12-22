@@ -1,6 +1,7 @@
 <template>
   <div class="vercel-deploy">
     <p>{{ data.state }}</p>
+    <p>{{ data.title }}</p>
     <p>{{ data.created }}</p>
     <p>{{ data.hook }}</p>
   </div>

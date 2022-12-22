@@ -24,7 +24,7 @@ withDefaults(
 <style lang="scss">
 .docs-link {
   border: var(--border);
-  border-radius: 2rem;
+  border-radius: var(--border-radius-l);
   padding: var(--gap-l);
   height: 20rem;
 

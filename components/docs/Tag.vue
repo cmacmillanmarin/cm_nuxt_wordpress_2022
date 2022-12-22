@@ -19,7 +19,7 @@ withDefaults(
   background-color: var(--docs-light-green);
   border: 1px solid var(--docs-mid-green);
   padding: var(--gap-s);
-  border-radius: 0.6rem;
+  border-radius: var(--border-radius-m);
   color: var(--docs-dark-green);
   font-size: var(--font-size-l);
 }

@@ -17,11 +17,19 @@
   --docs-light-green: #d1fae5;
   --docs-mid-green: #34d399;
   --docs-dark-green: #064e3b;
+  --white: #fff;
+  --transparent-white: rgba(255, 255, 255, 0.6);
+  --transparent-black: rgba(0, 0, 0, 0.6);
+  --black: #000;
+
   // transitions
   --css-transition: 200ms all ease-out;
 
   // layout
   --border: 1px solid var(--light-grey);
+  --border-radius-s: 0.2rem;
+  --border-radius-m: 0.6rem;
+  --border-radius-l: 1.2rem;
   --gap-2xs: 0.2rem;
   --gap-xs: 0.4rem;
   --gap-s: 0.8rem;

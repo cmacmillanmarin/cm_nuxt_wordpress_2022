@@ -1,30 +1,28 @@
-import { handleError } from '~/server/error'
 import { VercelDeployments, Deployments } from '~/types/vercel'
 
 export default defineEventHandler(async (event): Promise<Deployments | Error> => {
-  console.log('HEEEEEY!')
-
   try {
     const config = useRuntimeConfig()
     const { VERCEL_API_TOKEN, VERCEL_PROJECT_ID } = config
     const { VERCEL_API_BASE_URL } = config.public
 
-    console.log(event.node.req.url)
-    console.log(event.context)
+    const { limit, until } = getQuery(event)
 
-    // const query = useQuery(event)
-    console.log(
-      `${VERCEL_API_BASE_URL}/deployments?projectId=${VERCEL_PROJECT_ID}&target=production`
-    )
-    const response = await $fetch<VercelDeployments>(
-      `${VERCEL_API_BASE_URL}/deployments?projectId=${VERCEL_PROJECT_ID}&target=production`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${VERCEL_API_TOKEN}`,
-        },
-      }
-    )
+    const query = `
+      ?projectId=${VERCEL_PROJECT_ID}
+      &target=production
+      &limit=${limit}
+      ${until !== '0' ? `&until=${until}` : ''}
+    `.replace(/(\r\n|\n|\r|\s)/gm, '')
+
+    console.log(`${VERCEL_API_BASE_URL}/deployments${query}`)
+
+    const response = await $fetch<VercelDeployments>(`${VERCEL_API_BASE_URL}/deployments${query}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${VERCEL_API_TOKEN}`,
+      },
+    })
 
     // Parse
 
@@ -34,8 +32,8 @@ export default defineEventHandler(async (event): Promise<Deployments | Error> =>
     }
 
     for (const deployment of response.deployments) {
-      console.log(deployment)
       data.list.push({
+        title: deployment.meta.githubCommitMessage,
         created: deployment.createdAt.toString(),
         state: deployment.state,
         hook: !!deployment.meta.deployHookId,

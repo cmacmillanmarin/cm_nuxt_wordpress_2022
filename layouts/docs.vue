@@ -19,6 +19,8 @@
     --page-height: calc(var(--vh) - var(--footer-height));
 
     .docs-page {
+      position: relative;
+      z-index: 1;
       min-height: var(--page-height);
       padding-top: calc(var(--header-height) + var(--page-gap));
       padding-bottom: var(--page-gap);

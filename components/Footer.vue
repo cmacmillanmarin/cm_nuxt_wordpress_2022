@@ -1,5 +1,5 @@
 <template>
-  <footer v-intersect:animate.fade class="will-fade">
+  <footer class="footer will-fade" v-intersect:animate.fade>
     <nav class="in-grid in-grid--centered">
       <ul class="in-grid__col-6--desktop">
         <li>
@@ -16,7 +16,7 @@
 </template>
 
 <style lang="scss">
-footer {
+.footer {
   margin: 2rem 0;
 }
 </style>

@@ -35,6 +35,7 @@ const logOut: any = (): void => {
   width: 100%;
   z-index: 2;
   background-color: var(--transparent-white);
+  backdrop-filter: blur(2px);
   height: var(--header-height);
   border-bottom: var(--border);
   display: flex;
