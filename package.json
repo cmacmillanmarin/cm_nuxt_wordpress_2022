@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "build": "ENV=prod nuxt build",
     "dev": "ENV=dev nuxt dev",
