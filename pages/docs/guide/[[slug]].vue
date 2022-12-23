@@ -1,6 +1,7 @@
 <template>
   <div class="docs-page docs-page--guide in-grid">
-    <aside>
+    <aside
+      class="docs-page--guide__nav in-grid__col-2--tablet in-grid__col-2--desktop in-grid__col-gap-left-1--tablet in-grid__col-gap-left-1--desktop">
       <nav>
         <ul>
           <li><NuxtLink to="/docs/guide">Introduction</NuxtLink></li>
@@ -8,7 +9,7 @@
         </ul>
       </nav>
     </aside>
-    <div>
+    <div class="docs-page--guide__content in-grid__col-6--tablet in-grid__col-6--desktop">
       <ContentDoc :path="slug" />
     </div>
   </div>
@@ -18,3 +19,16 @@
 const route = useRoute()
 const slug = computed<string>(() => `/${route.params.slug}`)
 </script>
+
+<style lang="scss">
+.docs-page {
+  &--guide {
+    &__nav {
+      // border-right: var(--border);
+      li {
+        margin-bottom: var(--gap-s);
+      }
+    }
+  }
+}
+</style>
