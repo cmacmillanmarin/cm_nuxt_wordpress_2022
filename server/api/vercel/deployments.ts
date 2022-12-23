@@ -37,6 +37,7 @@ export default defineEventHandler(async (event): Promise<Deployments | Error> =>
 
     for (const deployment of response.deployments) {
       data.list.push({
+        id: deployment.uid,
         title: deployment.meta.githubCommitMessage,
         created: deployment.createdAt,
         date: formattedDate(new Date(deployment.createdAt)),

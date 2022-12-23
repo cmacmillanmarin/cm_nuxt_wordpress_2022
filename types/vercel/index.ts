@@ -49,10 +49,10 @@ export interface VercelDeployments {
 }
 
 export interface Deployment {
+  id: string
   title: string
   created: number
   date: string
-  ready: number
   time: number
   state: State
   hook: boolean
@@ -73,4 +73,69 @@ export interface VercelDeploy {
 
 export interface Deploy {
   success: boolean
+}
+
+export interface VercelDeploymentBuild {
+  builds: {
+    id: string
+    deploymentId: string
+    entrypoint: string
+    readyState:
+      | 'BUILDING'
+      | 'ERROR'
+      | 'INITIALIZING'
+      | 'QUEUED'
+      | 'READY'
+      | 'CANCELED'
+      | 'UPLOADING'
+      | 'DEPLOYING'
+      | 'ARCHIVED'
+    readyStateAt?: number
+    scheduledAt?: number | null
+    createdAt?: number
+    deployedAt?: number
+    createdIn?: string
+    use?: string
+    config?: {
+      distDir?: string
+      forceBuildIn?: string
+      reuseWorkPathFrom?: string
+      zeroConfig?: boolean
+    }
+    output: {
+      type?: 'lambda' | 'file' | 'edge'
+      path: string
+      digest: string
+      mode: number
+      size?: number
+      lambda?: {
+        functionName: string
+        deployedTo: string[]
+        memorySize?: number
+        timeout?: number
+        layers?: string[]
+      } | null
+      edge?: {
+        regions: string[] | null
+      } | null
+    }[]
+    fingerprint?: string | null
+    copiedFrom?: string
+  }[]
+}
+
+export type BuildType =
+  | 'BUILDING'
+  | 'ERROR'
+  | 'INITIALIZING'
+  | 'QUEUED'
+  | 'READY'
+  | 'CANCELED'
+  | 'UPLOADING'
+  | 'DEPLOYING'
+  | 'ARCHIVED'
+
+export interface DeploymentBuild {
+  state: BuildType
+  time: number
 }

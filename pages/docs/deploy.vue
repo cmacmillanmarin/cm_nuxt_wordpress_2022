@@ -33,6 +33,7 @@
         <template v-else>
           <DocsVercelDeployment
             v-for="deployment in deployments.list"
+            :key="deployment.id"
             :data="deployment"
             class="docs-page--deploy__deployments__content__deploy" />
         </template>
@@ -56,16 +57,10 @@ const deployments = ref<Deployments>({ pagination: false, list: [] })
 const deploymentsLimit = ref<number>(6)
 const deploymentsLoading = ref<boolean>(true)
 
+const deployRefresh = ref<number>(1000)
 const deployLoading = ref<boolean>(false)
-
 const deployInProgress = computed<boolean>(
-  () =>
-    !!deployments.value.list.find(
-      deployment =>
-        deployment.state === 'QUEUED' ||
-        deployment.state === 'INITIALIZING' ||
-        deployment.state === 'BUILDING'
-    )
+  () => !!deployments.value.list.find(d => isInProgress(d.state))
 )
 
 // If there is deployments already loaded, gets the date
@@ -89,12 +84,10 @@ async function deploy(): Promise<void> {
     const max = 10
     let it = 0
     while (!deployInProgress.value && it < max) {
-      await sleep(500)
+      await sleep(deployRefresh.value)
       await load()
       it++
     }
-    if (it === max) alert('Errrrrror!')
-    // console.log(it)
   }
   deployLoading.value = false
 }
@@ -117,6 +110,10 @@ async function loadMore(): Promise<void> {
   deployments.value.pagination = pagination
   deployments.value.list = [...deployments.value.list, ...list]
   deploymentsLoading.value = false
+}
+
+function isInProgress(state: string): boolean {
+  return state === 'QUEUED' || state === 'INITIALIZING' || state === 'BUILDING'
 }
 
 console.log('/docs/deployments')

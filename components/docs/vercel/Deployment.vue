@@ -9,7 +9,7 @@
           { 'docs-vercel-deployment__state__icon--building': deploymentStateBuilding },
         ]" />
       <span class="docs-vercel-deployment__state__label">
-        {{ data.state.toLowerCase() }}
+        {{ deploymentState.toLowerCase() }}
       </span>
     </div>
     <div v-if="deploymentInProgress" class="docs-vercel-deployment__building">
@@ -17,7 +17,7 @@
       <!-- <button class="docs-vercel-deployment__building__cancel-btn" @click="cancel" /> -->
     </div>
     <p v-else class="docs-vercel-deployment__time">
-      <span>{{ data.time }}s</span>
+      <span>{{ deploymentTime }}s</span>
     </p>
     <p class="docs-vercel-deployment__title">{{ data.title }}</p>
     <p class="docs-vercel-deployment__type">{{ data.hook ? 'Update' : 'Release' }}</p>
@@ -26,18 +26,43 @@
 </template>
 
 <script lang="ts" setup>
-import { Deployment } from '~/types/vercel'
+import { Deployment, DeploymentBuild } from '~/types/vercel'
 const props = defineProps<{ data: Deployment }>()
 
-const deploymentStateReady = computed<boolean>(() => props.data.state === 'READY')
-const deploymentStateBuilding = computed<boolean>(() => props.data.state === 'BUILDING')
+const deploymentTime = ref<number>(props.data.time)
+const deploymentState = ref<string>(props.data.state)
+const deploymentStateReady = computed<boolean>(() => deploymentState.value === 'READY')
+const deploymentStateBuilding = computed<boolean>(() => deploymentState.value === 'BUILDING')
 const deploymentStateError = computed<boolean>(
-  () => props.data.state === 'ERROR' || props.data.state === 'CANCELED'
+  () => deploymentState.value === 'ERROR' || deploymentState.value === 'CANCELED'
 )
 
 const deploymentInProgress = computed<boolean>(
   () => !deploymentStateReady.value && !deploymentStateError.value
 )
+
+let to: any
+let refreshRate: number = 1000 // ms
+
+onMounted(() => {
+  deploymentInProgress.value && refresh(props.data.id)
+})
+
+onUnmounted(() => {
+  to && clearTimeout(to)
+})
+
+async function refresh(id: string): Promise<void> {
+  const build = await $fetch<DeploymentBuild>(`/api/vercel/deployment?id=${id}`)
+  deploymentState.value = build.state || deploymentState.value
+  deploymentTime.value = build.time
+  console.log(deploymentState.value)
+  if (deploymentInProgress.value) {
+    to = setTimeout(() => {
+      refresh(id)
+    }, refreshRate)
+  }
+}
 
 function cancel(): void {
   console.log('cancel deployment')
