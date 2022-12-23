@@ -13,8 +13,7 @@ export interface VercelDeployment {
   created: number
   createdAt: number
   buildingAt: number
-  readyAt: number
-  ready: string
+  ready: number
   inspectorUrl: string
   aliasError: string
   aliasAssigned: string
@@ -51,7 +50,10 @@ export interface VercelDeployments {
 
 export interface Deployment {
   title: string
-  created: string
+  created: number
+  date: string
+  ready: number
+  time: number
   state: State
   hook: boolean
 }
@@ -59,4 +61,16 @@ export interface Deployment {
 export interface Deployments {
   pagination: boolean
   list: Array<Deployment>
+}
+
+export interface VercelDeploy {
+  job: {
+    id: string
+    state: string
+    createdAt: number
+  }
+}
+
+export interface Deploy {
+  success: boolean
 }

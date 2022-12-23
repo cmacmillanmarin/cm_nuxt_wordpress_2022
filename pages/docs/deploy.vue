@@ -4,9 +4,13 @@
       <div class="docs-page--deploy__intro__title in-grid__col-3--mobile in-grid__col-6--desktop">
         <h1>Deployments</h1>
       </div>
-      <div
-        class="docs-page--deploy__intro__btn in-grid__col-3--mobile in-grid__col-6--desktop text-align--right">
-        <DocsButton label="Deploy" type="primary" :inline="true" @click="deploy" />
+      <div class="docs-page--deploy__intro__btn in-grid__col-3--mobile in-grid__col-6--desktop">
+        <DocsButton
+          label="Deploy"
+          type="primary"
+          :inline="true"
+          :loading="deployLoading"
+          @click="deploy" />
       </div>
     </div>
 
@@ -22,7 +26,9 @@
               deploymentsLoading && !deployments.list.length,
           },
         ]">
-        <Loading v-if="deploymentsLoading && !deployments.list.length" />
+        <DocsLoading
+          v-if="deploymentsLoading && !deployments.list.length"
+          class="docs-page--deploy__deployments__content__loading" />
         <DocsVercelNoDeployments v-else-if="!deployments.list.length" />
         <template v-else>
           <DocsVercelDeployment
@@ -37,39 +43,76 @@
         :loading="deploymentsLoading"
         label="Load More"
         type="secondary"
-        @click="load" />
+        @click="loadMore" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Ref } from 'vue'
+import sleep from '~/utils/sleep'
 import { Deployments } from '~/types/vercel'
 
-const deployments: Ref<Deployments> = ref({ pagination: false, list: [] })
-const deploymentsLimit = ref(6)
-const deploymentsLoading = ref(true)
+const deployments = ref<Deployments>({ pagination: false, list: [] })
+const deploymentsLimit = ref<number>(6)
+const deploymentsLoading = ref<boolean>(true)
+
+const deployLoading = ref<boolean>(false)
+
+const deployInProgress = computed<boolean>(
+  () =>
+    !!deployments.value.list.find(
+      deployment =>
+        deployment.state === 'QUEUED' ||
+        deployment.state === 'INITIALIZING' ||
+        deployment.state === 'BUILDING'
+    )
+)
 
 // If there is deployments already loaded, gets the date
 // of the last one to load the next chunk from that
-const lastLoadedDeployDate = computed<string>(
-  () => deployments.value.list[deployments.value.list.length - 1]?.created || '0'
+const lastLoadedDeployDate = computed<number>(
+  () => deployments.value.list[deployments.value.list.length - 1]?.created || 0
 )
 
-onMounted(() => {
+onMounted((): void => {
   load()
 })
 
 async function deploy(): Promise<void> {
-  alert('deploy')
-  // deploy
-  // load
+  if (deployInProgress.value) {
+    alert('Deploy in Progress')
+    return
+  }
+  deployLoading.value = true
+  const { success } = await $fetch(`/api/vercel/deploy`)
+  if (success) {
+    const max = 10
+    let it = 0
+    while (!deployInProgress.value && it < max) {
+      await sleep(500)
+      await load()
+      it++
+    }
+    if (it === max) alert('Errrrrror!')
+    // console.log(it)
+  }
+  deployLoading.value = false
 }
 
 async function load(): Promise<void> {
+  const limit = Math.max(deploymentsLimit.value, deployments.value.list.length)
+  const { pagination, list } = await $fetch<Deployments>(`/api/vercel/deployments?limit=${limit}`)
+  deployments.value.pagination = pagination
+  deployments.value.list = list
+  deploymentsLoading.value = false
+}
+
+async function loadMore(): Promise<void> {
   deploymentsLoading.value = true
+  const until = lastLoadedDeployDate.value
+  const limit = deploymentsLimit.value
   const { pagination, list } = await $fetch<Deployments>(
-    `/api/vercel/deployments?until=${lastLoadedDeployDate.value}&limit=${deploymentsLimit.value}`
+    `/api/vercel/deployments?until=${until}&limit=${limit}`
   )
   deployments.value.pagination = pagination
   deployments.value.list = [...deployments.value.list, ...list]
@@ -84,6 +127,9 @@ console.log('/docs/deployments')
   &--deploy {
     &__intro {
       margin-bottom: var(--gap-xl);
+      &__btn {
+        text-align: right;
+      }
     }
     &__deployments {
       &__content {
@@ -91,6 +137,9 @@ console.log('/docs/deployments')
         border-radius: var(--border-radius-m);
         &--loading {
           border: none;
+        }
+        &__loading {
+          margin: var(--gap-xl) auto;
         }
         &__deploy {
           border-bottom: var(--border);

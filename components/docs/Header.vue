@@ -9,7 +9,7 @@
           </NuxtLink>
         </li>
       </ul>
-      <ul class="in-grid__col-6--desktop text-align--right">
+      <ul class="docs-header__nav__user in-grid__col-6--desktop text-align--right">
         <li><DocsAccount @log-out="logOut" /></li>
       </ul>
     </nav>
@@ -41,6 +41,9 @@ const logOut: any = (): void => {
   display: flex;
   &__nav {
     width: 100%;
+    &__user {
+      text-align: right;
+    }
   }
 }
 </style>

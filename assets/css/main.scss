@@ -17,6 +17,12 @@
   --docs-light-green: #d1fae5;
   --docs-mid-green: #34d399;
   --docs-dark-green: #064e3b;
+  --docs-light-orange: #ffdab9;
+  --docs-mid-orange: #ffa07a;
+  --docs-dark-orange: #ff7f50;
+  --docs-light-red: #f08080;
+  --docs-mid-red: #ed2939;
+  --docs-dark-red: #dc143c;
   --white: #fff;
   --transparent-white: rgba(255, 255, 255, 0.6);
   --transparent-black: rgba(0, 0, 0, 0.6);
@@ -87,30 +93,6 @@
 html {
   font-family: var(--font);
   font-size: 10px;
-}
-
-.display {
-  &--flex {
-    display: flex;
-  }
-  &--inline-block {
-    display: inline-block;
-  }
-  @include from__tablet {
-    color: red;
-  }
-}
-
-.text-align {
-  &--right {
-    text-align: right;
-  }
-}
-
-.border {
-  &--none {
-    border: none;
-  }
 }
 
 .__main {

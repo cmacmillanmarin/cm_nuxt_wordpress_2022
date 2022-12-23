@@ -1,14 +1,22 @@
 require('dotenv').config({ path: `./config/env/.env.private` })
 require('dotenv').config({ path: `./config/env/.env.${process.env.ENV}` })
 
-const { ENV, FE_BASE_URL, WP_BASE_URL, VERCEL_API_BASE_URL, VERCEL_API_TOKEN, VERCEL_PROJECT_ID } =
-  process.env
+const {
+  ENV,
+  FE_BASE_URL,
+  WP_BASE_URL,
+  VERCEL_API_BASE_URL,
+  VERCEL_API_TOKEN,
+  VERCEL_PROJECT_ID,
+  VERCEL_DEPLOY_LINK,
+} = process.env
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   runtimeConfig: {
     VERCEL_API_TOKEN: VERCEL_API_TOKEN,
     VERCEL_PROJECT_ID: VERCEL_PROJECT_ID,
+    VERCEL_DEPLOY_LINK: VERCEL_DEPLOY_LINK,
     public: {
       IS_DEV: ENV == 'dev',
       FE_BASE_URL: FE_BASE_URL,

@@ -1,4 +1,5 @@
 import { VercelDeployments, Deployments } from '~/types/vercel'
+import { formattedDate } from '~/utils/date'
 
 export default defineEventHandler(async (event): Promise<Deployments | Error> => {
   try {
@@ -12,17 +13,20 @@ export default defineEventHandler(async (event): Promise<Deployments | Error> =>
       ?projectId=${VERCEL_PROJECT_ID}
       &target=production
       &limit=${limit}
-      ${until !== '0' ? `&until=${until}` : ''}
+      ${until && until !== '0' ? `&until=${until}` : ''}
     `.replace(/(\r\n|\n|\r|\s)/gm, '')
 
-    console.log(`${VERCEL_API_BASE_URL}/deployments${query}`)
+    console.log(`${VERCEL_API_BASE_URL}/v6/deployments${query}`)
 
-    const response = await $fetch<VercelDeployments>(`${VERCEL_API_BASE_URL}/deployments${query}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${VERCEL_API_TOKEN}`,
-      },
-    })
+    const response = await $fetch<VercelDeployments>(
+      `${VERCEL_API_BASE_URL}/v6/deployments${query}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${VERCEL_API_TOKEN}`,
+        },
+      }
+    )
 
     // Parse
 
@@ -34,7 +38,10 @@ export default defineEventHandler(async (event): Promise<Deployments | Error> =>
     for (const deployment of response.deployments) {
       data.list.push({
         title: deployment.meta.githubCommitMessage,
-        created: deployment.createdAt.toString(),
+        created: deployment.createdAt,
+        date: formattedDate(new Date(deployment.createdAt)),
+        ready: deployment.ready,
+        time: Math.floor((deployment.ready - deployment.buildingAt) / 1000),
         state: deployment.state,
         hook: !!deployment.meta.deployHookId,
       })

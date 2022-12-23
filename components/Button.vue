@@ -1,5 +1,5 @@
 <template>
-  <component :class="['button', 'display--inline-block', 'border--none']" :is="type" :to="to">
+  <component class="button" :is="type" :to="to">
     {{ label }}
   </component>
 </template>
@@ -15,8 +15,10 @@ const type = props.to ? resolveComponent('NuxtLink') : 'button'
 
 <style lang="scss">
 .button {
+  display: inline-block;
   cursor: pointer;
   background: var(--color-lime);
+  border: none;
   padding: 1.2rem 2rem;
   text-transform: uppercase;
   &:hover {

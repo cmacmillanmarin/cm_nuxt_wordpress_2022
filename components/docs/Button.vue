@@ -8,7 +8,12 @@
     ]"
     :is="type"
     :to="to">
-    {{ loading ? 'Loading' : label }}
+    <span v-if="loading" class="docs-button__loading">
+      <DocsLoading :negative="isPrimary" />
+    </span>
+    <span :class="['docs-button__label', { 'docs-button__label--hidden': loading }]">
+      {{ label }}
+    </span>
   </component>
 </template>
 
@@ -35,8 +40,9 @@ const isSecondary = props.type === 'secondary'
 
 <style lang="scss">
 .docs-button {
+  position: relative;
   cursor: pointer;
-  padding: 1.2rem 2rem;
+  padding: 1.4rem 2rem;
   text-transform: uppercase;
   border-radius: var(--border-radius-m);
 
@@ -56,8 +62,19 @@ const isSecondary = props.type === 'secondary'
     display: inline-block;
   }
 
-  &:hover {
-    color: black;
+  &__loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__label {
+    display: block;
+    will-change: opacity;
+    &--hidden {
+      opacity: 0;
+    }
   }
 }
 </style>
