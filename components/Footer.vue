@@ -8,7 +8,7 @@
           >
         </li>
       </ul>
-      <ul class="in-grid__col-6--desktop text-align--right">
+      <ul class="footer__copy in-grid__col-6--desktop text-align--right">
         <li><a href="https://cmacmillanmarin.com" rel="noopener">@cmacmillanmarin 2022</a></li>
       </ul>
     </nav>
@@ -18,5 +18,8 @@
 <style lang="scss">
 .footer {
   margin: 2rem 0;
+  &__copy {
+    text-align: right;
+  }
 }
 </style>

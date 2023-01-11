@@ -11,7 +11,7 @@ export default function useWordpress() {
     // Fetch
     // refreshToken is used to control the Wordpress and Nuxt caché
     //
-    const key = getKey(call)
+    const key = _getKey(call)
 
     console.log(`$fetch('${call}', { params: { refresh: ${store.refreshToken} })`)
 
@@ -27,7 +27,7 @@ export default function useWordpress() {
     return { data, error }
   }
 
-  function getKey(call: string) {
+  function _getKey(call: string) {
     return `${call.substring(1).replaceAll('/', '-')}-${store.refreshToken}`
   }
 

@@ -95,6 +95,35 @@ html {
   font-size: 10px;
 }
 
+body {
+  &::after {
+    display: none;
+  }
+  &::after {
+    content: 'mobile';
+    @mixin from__tablet {
+      content: 'tablet';
+    }
+    @mixin from__tablet--landscape {
+      content: 'tablet--landscape';
+    }
+    @mixin from__desktop {
+      content: 'desktop';
+    }
+    @mixin from__desktop--medium {
+      content: 'desktop--medium';
+    }
+    @mixin from__desktop--big {
+      content: 'desktop--big';
+    }
+    @media all and (pointer: coarse) {
+      & {
+        --touch: 1;
+      }
+    }
+  }
+}
+
 .__main {
   &--loading {
     * {

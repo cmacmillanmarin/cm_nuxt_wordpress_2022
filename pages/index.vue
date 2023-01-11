@@ -2,9 +2,12 @@
   <div class="home">
     <div class="home__posts in-grid">
       <Post
-        v-for="post in posts"
+        v-for="post in [...posts, ...posts, ...posts]"
+        :key="post.slug"
         :data="post"
-        class="in-grid__col-6--mobile in-grid__col-4--tablet in-grid__col-3--desktop" />
+        class="in-grid__col-6--mobile in-grid__col-4--tablet in-grid__col-3--desktop will-fade"
+        v-intersect:animate.fade
+        data-scroll />
     </div>
   </div>
 </template>
