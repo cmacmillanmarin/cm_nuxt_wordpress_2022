@@ -21,6 +21,8 @@ export default function useDevice() {
     touch.value = !!window.getComputedStyle(document.body, ':after').getPropertyValue('--touch')
     safari.value =
       navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1
+
+    // touch.value = true
   }
 
   return { touch, safari }

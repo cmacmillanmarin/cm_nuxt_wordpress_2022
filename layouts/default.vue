@@ -1,9 +1,9 @@
 <template>
   <div ref="el" class="__layout">
-    <Header />
+    <Header data-scroll />
     <slot />
 
-    <Footer />
+    <Footer data-scroll />
     <HelpersPreview v-if="store.isPreview" />
   </div>
 </template>

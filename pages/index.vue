@@ -5,7 +5,7 @@
         v-for="post in [...posts, ...posts, ...posts]"
         :key="post.slug"
         :data="post"
-        class="in-grid__col-6--mobile in-grid__col-4--tablet in-grid__col-3--desktop will-fade"
+        class="home__posts__post in-grid__col-6--mobile in-grid__col-4--tablet in-grid__col-3--desktop will-fade"
         v-intersect:animate.fade
         data-scroll />
     </div>
@@ -25,5 +25,10 @@ console.log('/')
 <style lang="scss">
 .home {
   padding: 4rem 0 8rem;
+  &__posts {
+    &__post {
+      will-change: transform, opacity;
+    }
+  }
 }
 </style>

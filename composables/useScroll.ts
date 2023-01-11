@@ -2,6 +2,7 @@
 // requires:
 // ~/composables/useResize
 // ~/composables/useDevice
+// ~/composables/useRaf
 //
 
 import { toPx } from '~/utils/index'
@@ -9,13 +10,18 @@ import { toPx } from '~/utils/index'
 export default function scroll() {
   const { vw, vh, onResize } = useResize()
   const { touch, safari } = useDevice()
+  const { addTicker, killTicker } = useRaf()
 
   let _debug: boolean = true
 
   let _el: HTMLElement
   let _mounted: boolean = false
   let _disabled: boolean = false
+  let _inRaf: boolean = false
   let _target: number = 0
+  let _previous: number = 0
+  let _current: number = 0
+  let _elasticity: number = 0.1
   let _velocity: number = 1
   let _bounding: number = 0
 
@@ -24,9 +30,11 @@ export default function scroll() {
     hasMouseWheelEvent: false,
   }
 
+  type Bounding = { top: number; left: number; width: number; height: number }
   interface Child {
     el: HTMLElement
-    bounding: { top: number; left: number; width: number; height: number }
+    bounding: Bounding
+    inView: boolean
   }
   let _children: Array<Child> = []
 
@@ -50,6 +58,7 @@ export default function scroll() {
     else {
       _el = el
       type.value = touch.value ? 'native' : 'smooth'
+      console.log(type.value, isSmooth, isNative)
       _getChildren({ reset: true })
       _updateSize()
       _addEventListeners()
@@ -58,8 +67,8 @@ export default function scroll() {
   }
 
   function _start() {
-    isSmooth && _startSmooth()
-    isNative && _startNative()
+    isSmooth.value && _startSmooth()
+    isNative.value && _startNative()
     _mounted = true
   }
 
@@ -71,7 +80,14 @@ export default function scroll() {
     _el.parentElement.style.overflow = safari.value ? 'hidden' : 'clip'
     _el.parentElement.style.height = toPx(vh.value)
   }
-  function _destroySmooth(): void {}
+  function _destroySmooth(): void {
+    if (!_el.parentElement) {
+      _log('element without parent')
+      return
+    }
+    _el.parentElement.style.overflow = 'visible'
+    _el.parentElement.style.height = 'auto'
+  }
   function _startNative(): void {}
   function _destroyNative(): void {}
 
@@ -83,6 +99,10 @@ export default function scroll() {
     _log('destroyyyy')
   }
 
+  function _inTarget(): boolean {
+    return Math.abs(_current - _target) < 0.1
+  }
+
   interface getChildrenParams {
     reset: boolean
   }
@@ -92,49 +112,93 @@ export default function scroll() {
     if (reset) _children = []
     for (const el of elements) {
       delete el.dataset.scroll
+      const bounding: Bounding = el.getBoundingClientRect()
       _children.push({
         el: el,
-        bounding: el.getBoundingClientRect(),
+        bounding: bounding,
+        inView: _inView(bounding),
       })
     }
-    console.log(_children)
+  }
+
+  function _inView(bounding: Bounding): boolean {
+    const initPos = Math.ceil(bounding.top)
+    const lastPos = Math.ceil(initPos + bounding.height)
+    const windowSize = vh.value
+    const scrollPoint = _current
+    return scrollPoint + windowSize > initPos && scrollPoint < lastPos
   }
 
   function _updateSize(): void {
     _bounding = _el.getBoundingClientRect().height - vh.value
-    console.log(`_updateSize: ${_bounding}`)
+    _log(`_updateSize: ${_bounding}`)
   }
 
-  function onScroll(): void {
+  function _onScroll(): void {
     _log('onScroll')
   }
 
-  function onWheel(e: WheelEvent): void {
-    _log('onWheel')
+  function _onWheel(e: WheelEvent): void {
     if (isNative.value || _disabled) return
     e.preventDefault()
     const { deltaY, type } = e
     const y = deltaY * _velocity
-    _log(`${deltaY}`)
     _target = Math.max(Math.min(_bounding, _target + y), 0)
     _startRaf()
   }
 
-  function onMouseWheel(e: MouseEvent): void {}
+  function _onMouseWheel(e: MouseEvent): void {}
 
-  function _startRaf() {
-    _log(`start raf: ${_target}`)
-    _el.style.transform = `translate3d(0, -${_target}px, 0)`
+  function _startRaf(): void {
+    if (!_inRaf && !_inTarget()) {
+      _log(`addTicker()`)
+      addTicker(_raf)
+    }
+  }
+
+  function _stopRaf(): void {
+    _log(`killTicker()`)
+    _inRaf = false
+    _current = _target
+    killTicker(_raf)
+  }
+
+  function _raf(): void {
+    _inRaf = true
+    _current += (_target - _current) * _elasticity
+    _run()
+    _inTarget() && _stopRaf()
+  }
+
+  function _run(): void {
+    direction.value = _current > _previous ? 'up' : 'down'
+
+    for (const child of _children) {
+      let y = 0
+      const { bounding } = child
+      // if (child.sticky) y = parseInt(this.stickyPositionOf(child))
+      if (child.inView) y = Math.ceil(_current)
+      else if (_current > bounding.top) y = Math.ceil(bounding.top + bounding.height)
+      child.el.style.transform = `translate3D(0, -${y}px, 0)`
+      child.inView = _inView(child.bounding)
+    }
+
+    _previous = _current
   }
 
   function _addEventListeners(): void {
     const disablePassive = { passive: false }
-    window.addEventListener('scroll', onScroll)
-    window.addEventListener('wheel', onWheel, disablePassive)
+    window.addEventListener('scroll', _onScroll)
+    window.addEventListener('wheel', _onWheel, disablePassive)
   }
-  function _removeEventListeners(): void {}
 
-  function _log(msg: string) {
+  function _removeEventListeners(): void {
+    window.removeEventListener('scroll', _onScroll)
+    window.removeEventListener('wheel', _onWheel)
+    killTicker(_raf)
+  }
+
+  function _log(msg: string): void {
     _debug && console.log(`useScroll ~ ${msg}`)
   }
 

@@ -54,7 +54,12 @@ export default defineNuxtConfig({
         { name: 'twitter:description', content: 'Homepage description' },
         { name: 'twitter:image', content: '' },
       ],
-      script: [],
+      script: [
+        {
+          src: `${FE_BASE_URL}/assets/js/gsap/gsap.min.js`,
+          defer: true,
+        },
+      ],
     },
   },
 

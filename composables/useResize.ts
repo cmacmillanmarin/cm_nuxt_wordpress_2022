@@ -28,7 +28,6 @@ export default function useResize() {
   function updateSize(): void {
     vw.value = window.innerWidth
     vh.value = window.innerHeight
-    console.log(vw.value, vh.value)
   }
 
   return { vw, vh, onResize }

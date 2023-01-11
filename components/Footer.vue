@@ -17,7 +17,7 @@
 
 <style lang="scss">
 .footer {
-  margin: 2rem 0;
+  padding: 2rem 0;
   &__copy {
     text-align: right;
   }
